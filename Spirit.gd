@@ -99,12 +99,12 @@ func _on_HealthTimer_timeout() -> void:
 		health -= 2
 	elif health < MAX_HEALTH:
 		health += 2
-	if health == 0:
-		queue_free()
 	var end_color := Color(1.0, 1.0, 1.0, float(health) / MAX_HEALTH)
 	$Tween.interpolate_property(get_node("PathFollow2D/Sprite"), "modulate", start_color, end_color, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	if not $Tween.is_active():
 		$Tween.start()
+	if get_node("PathFollow2D/Sprite").modulate.a == 0.0:
+		queue_free()
 
 func _on_body_entered(body: PhysicsBody2D) -> void:
 	if body.name == "Player":
