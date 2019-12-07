@@ -101,6 +101,7 @@ func _on_SpiritTimer_timeout() -> void:
 	var spirit: PathFollow2D = load("res://Spirit.tscn").instance()
 	spirit.singing = true
 	add_child(spirit)
+	emit_signal("singing_started")
 
 
 func _on_body_entered(body: PhysicsBody2D) -> void:
