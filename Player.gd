@@ -77,7 +77,7 @@ func die() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("jump") and jumps > 0:
+	if Input.is_action_just_pressed("jump") and is_on_floor() and jumps > 0:
 		jumps -= 1
 		queue_jump = true
 	direction = 0
