@@ -1,0 +1,31 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Charon.gd" type="Script" id=1]
+[ext_resource path="res://world/charon/sprites/sprite_charon00.png" type="Texture" id=2]
+[ext_resource path="res://world/charon/sprites/sprite_charon01.png" type="Texture" id=3]
+[ext_resource path="res://world/charon/sprites/sprite_charon02.png" type="Texture" id=4]
+[ext_resource path="res://world/charon/sprites/sprite_charon03.png" type="Texture" id=5]
+[ext_resource path="res://world/charon/sprites/sprite_charon04.png" type="Texture" id=6]
+[ext_resource path="res://world/charon/sprites/sprite_charon05.png" type="Texture" id=7]
+[ext_resource path="res://world/charon/sprites/sprite_charon06.png" type="Texture" id=8]
+[ext_resource path="res://world/charon/sprites/sprite_charon07.png" type="Texture" id=9]
+[ext_resource path="res://world/charon/sprites/sprite_charon08.png" type="Texture" id=10]
+[ext_resource path="res://world/charon/sprites/sprite_charon09.png" type="Texture" id=11]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Charon" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+frame = 8
+playing = true
+flip_h = true
+

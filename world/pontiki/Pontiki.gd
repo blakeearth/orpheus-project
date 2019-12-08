@@ -1,7 +1,7 @@
 extends Node2D
 
 var pos_queue: Array
-var facing_offset: int = -75
+var facing_offset: int = -40
 var processing_queue: bool = false
 
 
@@ -16,13 +16,17 @@ func _physics_process(delta) -> void:
 		processing_queue = true
 	elif pos_queue.size() == 0:
 		processing_queue = false
+		$AnimatedSprite.playing = false
 	if processing_queue:
+		$AnimatedSprite.playing = true
 		var pos_queue_adjusted: Vector2 = pos_queue.pop_front()
 		if pos_queue[0].x < pos_queue[1].x:
-			facing_offset = lerp(facing_offset, -100, 0.025)
+			$AnimatedSprite.flip_h = false
+			facing_offset = lerp(facing_offset, -40, 0.025)
 		elif pos_queue[0].x > pos_queue[1].x:
-			facing_offset = lerp(facing_offset, 100, 0.025)
-		position = Vector2(pos_queue_adjusted.x + facing_offset, pos_queue_adjusted.y + 40)
+			$AnimatedSprite.flip_h = true
+			facing_offset = lerp(facing_offset, 40, 0.025)
+		position = Vector2(pos_queue_adjusted.x + facing_offset, pos_queue_adjusted.y + 37)
 
 
 func queue_position(pos: Vector2) -> void:

@@ -6,7 +6,7 @@ const CAMERA_X_MAX: int = 500
 const CAMERA_Y_MIN: int = -300
 const CAMERA_Y_MAX: int = 300
 
-const MAX_HEALTH = 10
+const MAX_HEALTH = 6
 
 var current_spiral_checkpoint: int = 0
 
@@ -18,9 +18,21 @@ var outer_position: Vector2
 var health: int = MAX_HEALTH
 var singing: bool
 
+var offset = 1
+
 func _ready() -> void:
+	randomize()
+	offset = rand_range(1, 5)
+	$PathFollow2D/Sprite.modulate.a = 0.0
+	var start_color: Color = get_node("PathFollow2D/Sprite").modulate
+	var end_color: Color = Color(1.0, 1.0, 1.0, 1.0)
+	$Tween.interpolate_property(get_node("PathFollow2D/Sprite"), "modulate", start_color, end_color, 0.6, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	if not $Tween.is_active():
+		$Tween.start()
 	get_parent().connect("singing_started", self, "_on_singing_started")
 	get_parent().connect("singing_stopped", self, "_on_singing_stopped")
+	Globals.gui().connect("speaker_changed", self, "_on_speaker_changed")
+	Globals.gui().connect("dialogue_stopped", self, "_on_dialogue_stopped")
 	$PathFollow2D/Area2D.connect("body_entered", get_parent(), "_on_body_entered")
 	# N E S W
 	# 0 1 2 3
@@ -49,7 +61,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if $PathFollow2D.position.distance_to(Vector2(0, 0)) > outer_position.distance_to(Vector2(0, 0)):
 		queue_free()
-	var offset: int = 10
 	$PathFollow2D.set_offset($PathFollow2D.get_offset() + offset) 
 
 
@@ -103,9 +114,18 @@ func _on_HealthTimer_timeout() -> void:
 	$Tween.interpolate_property(get_node("PathFollow2D/Sprite"), "modulate", start_color, end_color, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	if not $Tween.is_active():
 		$Tween.start()
-	if get_node("PathFollow2D/Sprite").modulate.a == 0.0:
+	if get_node("PathFollow2D/Sprite").modulate.a <= 0.2:
 		queue_free()
 
 func _on_body_entered(body: PhysicsBody2D) -> void:
-	if body.name == "Player":
-		queue_free()
+	if body != null:
+		if body.name == "Player":
+			queue_free()
+
+
+func _on_speaker_changed(n2: Node2D) -> void:
+	set_physics_process(false)
+
+
+func _on_dialogue_stopped() -> void:
+	set_physics_process(true)
