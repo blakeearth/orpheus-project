@@ -54,4 +54,6 @@ func _on_body_exited(body: PhysicsBody2D) -> void:
 		if body.name == "Player":
 			if voluntary:
 				dialogue_box.queue_free()
+			else:
+				queue_free()
 			Globals.gui().set_npc_speaker(null)

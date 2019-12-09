@@ -40,6 +40,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta) -> void:
+	if position.y > 1000:
+		die()
 	if queue_jump == true:
 		velocity.y = -jump_speed
 		queue_jump = false

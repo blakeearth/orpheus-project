@@ -153,7 +153,6 @@ margin_bottom = 136.249
 rect_min_size = Vector2( 450, 120 )
 
 [node name="LoadingScreen" type="CenterContainer" parent="CanvasLayer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 4 )
@@ -168,7 +167,6 @@ position = Vector2( 512, 300 )
 scale = Vector2( 10, 10 )
 frames = SubResource( 4 )
 animation = "walk"
-frame = 3
 playing = true
 
 [node name="LoadingAlphaTween" type="Tween" parent="CanvasLayer/LoadingScreen"]

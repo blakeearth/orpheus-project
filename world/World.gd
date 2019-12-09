@@ -21,8 +21,8 @@ func change_stage(new_stage_path: String) -> void:
 func _on_curtain_dropped() -> void:
 	$Stage.free()
 	var new_stage: Node = load(stage_path).instance()
+	new_stage.name = "Stage"
 	call_deferred("add_child", new_stage)
 	$Player.position = new_stage.get_node("SpawnPoint").position
 	$Player.call_deferred("die")
-	new_stage.name = "Stage"
 	emit_signal("loading_stopped")
