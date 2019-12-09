@@ -8,6 +8,9 @@ class_name Speaker
 
 var current_dialogue_node: DialogueNode
 var dialogue_box: Node2D
+export var voluntary = true
+
+onready var player = Globals.world().get_node("Player")
 
 func _ready() -> void:
 	var region: Area2D = Area2D.new()
@@ -25,17 +28,30 @@ func get_next_dialogue_node() -> DialogueNode:
 	return current_dialogue_node
 
 
+func make_dialogue_node(speaker: Node2D, box: String, text: String) -> DialogueNode:
+	var new_node: DialogueNode = DialogueNode.new()
+	new_node.set_speaker(speaker)
+	new_node.set_box(box)
+	new_node.set_text(text)
+	return new_node
+
+
 func _on_body_entered(body: PhysicsBody2D) -> void:
 	if body != null:
 		if body.name == "Player":
-			dialogue_box = load("res://gui/TalkPrompt.tscn").instance()
-			dialogue_box.position = Vector2(position.x - 50, position.y - 130)
 			Globals.gui().set_npc_speaker(self)
-			Globals.gui().add_child(dialogue_box)
+			if voluntary:
+				dialogue_box = load("res://gui/TalkPrompt.tscn").instance()
+				dialogue_box.position = Vector2(position.x - 50, position.y - 130)
+				Globals.gui().add_child(dialogue_box)
+			else:
+				Globals.gui().start_dialogue()
+
 
 
 func _on_body_exited(body: PhysicsBody2D) -> void:
 	if body != null:
 		if body.name == "Player":
+			if voluntary:
+				dialogue_box.queue_free()
 			Globals.gui().set_npc_speaker(null)
-			dialogue_box.queue_free()

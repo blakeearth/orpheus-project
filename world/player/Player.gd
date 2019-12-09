@@ -50,7 +50,10 @@ func _physics_process(delta) -> void:
 	else:
 		jumps = 1
 		velocity.y = STAY_ON_FLOOR
-	velocity.x = direction * max_speed
+	if not in_dialogue:
+		velocity.x = direction * max_speed
+	else:
+		velocity.x = 0
 	if velocity.x != 0:
 		if not $AnimatedSprite.playing:
 			$AnimatedSprite.playing = true

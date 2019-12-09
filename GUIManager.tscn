@@ -1,8 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://GUIManager.gd" type="Script" id=1]
 [ext_resource path="res://gui/ProgressBarFG.tres" type="StyleBox" id=2]
 [ext_resource path="res://gui/ProgressBarBG.tres" type="StyleBox" id=3]
+[ext_resource path="res://gui/MainTheme.tres" type="Theme" id=4]
+[ext_resource path="res://world/pontiki/sprites/sprite_pontiki0_inverted.png" type="Texture" id=5]
+[ext_resource path="res://world/pontiki/sprites/sprite_pontiki1_inverted.png" type="Texture" id=6]
+[ext_resource path="res://world/pontiki/sprites/sprite_pontiki2_inverted.png" type="Texture" id=7]
+[ext_resource path="res://world/pontiki/sprites/sprite_pontiki3_inverted.png" type="Texture" id=8]
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
@@ -22,6 +27,14 @@ ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
 ProgressBar/fonts/font = null
 ProgressBar/styles/bg = null
 ProgressBar/styles/fg = null
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+} ]
 
 [node name="GUI" type="Node"]
 script = ExtResource( 1 )
@@ -118,10 +131,11 @@ custom_styles/panel = ExtResource( 2 )
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/HUD/DialogueBoxes/A"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 514.385
+margin_left = 18.4524
 margin_top = 15.0
-margin_right = 484.385
+margin_right = -15.5476
 margin_bottom = -15.0
+rect_min_size = Vector2( 450, 120 )
 
 [node name="B" type="Panel" parent="CanvasLayer/HUD/DialogueBoxes"]
 margin_left = 499.0
@@ -132,11 +146,36 @@ size_flags_vertical = 3
 custom_styles/panel = ExtResource( 2 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/HUD/DialogueBoxes/B"]
+margin_left = 19.3445
+margin_top = 16.2494
+margin_right = 469.345
+margin_bottom = 136.249
+rect_min_size = Vector2( 450, 120 )
+
+[node name="LoadingScreen" type="CenterContainer" parent="CanvasLayer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 15.3846
-margin_top = 15.0
-margin_right = -14.6154
-margin_bottom = -15.0
+theme = ExtResource( 4 )
+
+[node name="Panel" type="Panel" parent="CanvasLayer/LoadingScreen"]
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 1024, 600 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="CanvasLayer/LoadingScreen/Panel"]
+position = Vector2( 512, 300 )
+scale = Vector2( 10, 10 )
+frames = SubResource( 4 )
+animation = "walk"
+frame = 3
+playing = true
+
+[node name="LoadingAlphaTween" type="Tween" parent="CanvasLayer/LoadingScreen"]
+
+[node name="LoadingTimer" type="Timer" parent="CanvasLayer/LoadingScreen"]
+wait_time = 3.0
 [connection signal="tween_completed" from="CanvasLayer/HUD/DialogueTween" to="." method="_on_DialogueTween_tween_completed"]
 [connection signal="tween_completed" from="CanvasLayer/HUD/DialogueAlphaTween" to="." method="_on_DialogueAlphaTween_tween_completed"]
+[connection signal="tween_completed" from="CanvasLayer/LoadingScreen/LoadingAlphaTween" to="." method="_on_LoadingAlphaTween_tween_completed"]
+[connection signal="timeout" from="CanvasLayer/LoadingScreen/LoadingTimer" to="." method="_on_LoadingTimer_timeout"]
