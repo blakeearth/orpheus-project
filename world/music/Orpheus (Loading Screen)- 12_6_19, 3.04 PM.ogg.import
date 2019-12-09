@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Orpheus (Loading Screen)- 12_6_19, 3.04 PM.ogg-ef60a4a3d9f557bf4ff9a88cbabc6478.oggstr"
+
+[deps]
+
+source_file="res://world/music/Orpheus (Loading Screen)- 12_6_19, 3.04 PM.ogg"
+dest_files=[ "res://.import/Orpheus (Loading Screen)- 12_6_19, 3.04 PM.ogg-ef60a4a3d9f557bf4ff9a88cbabc6478.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

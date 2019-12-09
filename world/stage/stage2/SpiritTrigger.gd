@@ -16,4 +16,5 @@ func _ready() -> void:
 func _on_Area2D_body_entered(body: PhysicsBody2D) -> void:
 	if body != null:
 		if body.name == "Player":
-			body.die()
+			body.add_spirit()
+			queue_free()

@@ -24,5 +24,10 @@ func _on_curtain_dropped() -> void:
 	new_stage.name = "Stage"
 	call_deferred("add_child", new_stage)
 	$Player.position = new_stage.get_node("SpawnPoint").position
-	$Player.call_deferred("die")
+	for child in $Player.get_children():
+		if child.get_script() == Spirit:
+			child.queue_free()
 	emit_signal("loading_stopped")
+
+func _on_RestartLevelPlayer_finished() -> void:
+	$RestartLevelPlayer.stop()

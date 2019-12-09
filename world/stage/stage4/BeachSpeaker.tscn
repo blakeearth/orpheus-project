@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://world/stage/stage4/BeachSpeaker.gd" type="Script" id=1]
+
+[node name="BeachSpeaker" type="Node2D"]
+script = ExtResource( 1 )

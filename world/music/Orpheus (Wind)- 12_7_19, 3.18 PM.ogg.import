@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Orpheus (Wind)- 12_7_19, 3.18 PM.ogg-487461fe5c397e18b6ac14c664603f66.oggstr"
+
+[deps]
+
+source_file="res://world/music/Orpheus (Wind)- 12_7_19, 3.18 PM.ogg"
+dest_files=[ "res://.import/Orpheus (Wind)- 12_7_19, 3.18 PM.ogg-487461fe5c397e18b6ac14c664603f66.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://world/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://world/player/sprites/sprite_orpheus0.png" type="Texture" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://world/player/sprites/sprite_orpheus2.png" type="Texture" id=4]
 [ext_resource path="res://world/player/sprites/sprite_orpheus3.png" type="Texture" id=5]
 [ext_resource path="res://world/pontiki/Pontiki.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Spirit.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 18.0159, 40 )
@@ -39,21 +38,22 @@ frames = SubResource( 2 )
 frame = 3
 
 [node name="Pontiki" parent="." instance=ExtResource( 6 )]
-position = Vector2( -91.4822, 34.2185 )
-
-[node name="Spirit" parent="." instance=ExtResource( 7 )]
+position = Vector2( 142.973, 37.3136 )
 
 [node name="SpiritTimer" type="Timer" parent="."]
 process_mode = 0
 wait_time = 2.0
-autostart = true
 
 [node name="BreathTimer" type="Timer" parent="."]
 wait_time = 0.05
 
 [node name="HopeTimer" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 8.0
 [connection signal="tween_completed" from="Camera2D/Tween" to="." method="_on_Tween_tween_completed"]
 [connection signal="timeout" from="SpiritTimer" to="." method="_on_SpiritTimer_timeout"]
 [connection signal="timeout" from="BreathTimer" to="." method="_on_BreathTimer_timeout"]
 [connection signal="timeout" from="HopeTimer" to="." method="_on_HopeTimer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

@@ -28,4 +28,7 @@ func set_text(new_text: String) -> void:
 
 
 func get_text() -> String:
-	return speaker.name + ": " + text
+	var dialogue_name: String = speaker.name
+	if speaker.name == "Player":
+		dialogue_name = "Orpheus"
+	return dialogue_name + ": " + text

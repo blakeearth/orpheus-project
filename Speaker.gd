@@ -10,6 +10,8 @@ var current_dialogue_node: DialogueNode
 var dialogue_box: Node2D
 export var voluntary = true
 
+var used: bool = false
+
 onready var player = Globals.world().get_node("Player")
 
 func _ready() -> void:
@@ -22,9 +24,11 @@ func _ready() -> void:
 	add_child(region)
 	region.connect("body_entered", self, "_on_body_entered")
 	region.connect("body_exited", self, "_on_body_exited")
+	Globals.gui().connect("dialogue_stopped", self, "_on_dialogue_stopped")
 
 
 func get_next_dialogue_node() -> DialogueNode:
+	used = true
 	return current_dialogue_node
 
 
@@ -47,6 +51,12 @@ func _on_body_entered(body: PhysicsBody2D) -> void:
 			else:
 				Globals.gui().start_dialogue()
 
+
+
+func _on_dialogue_stopped() -> void:
+	if not voluntary and used:
+		queue_free()
+		Globals.gui().set_npc_speaker(null)
 
 
 func _on_body_exited(body: PhysicsBody2D) -> void:

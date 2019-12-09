@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Orpheus (Tunnel Theme + optional flute)- 12_7_19, 3.17 PM.ogg-3392677d158a16781abb33036561ad39.oggstr"
+
+[deps]
+
+source_file="res://world/music/Orpheus (Tunnel Theme + optional flute)- 12_7_19, 3.17 PM.ogg"
+dest_files=[ "res://.import/Orpheus (Tunnel Theme + optional flute)- 12_7_19, 3.17 PM.ogg-3392677d158a16781abb33036561ad39.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

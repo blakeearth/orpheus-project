@@ -163,16 +163,19 @@ margin_bottom = 600.0
 rect_min_size = Vector2( 1024, 600 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="CanvasLayer/LoadingScreen/Panel"]
-position = Vector2( 512, 300 )
-scale = Vector2( 10, 10 )
+position = Vector2( -60, 565 )
+scale = Vector2( 5, 5 )
 frames = SubResource( 4 )
 animation = "walk"
+frame = 3
 playing = true
 
 [node name="LoadingAlphaTween" type="Tween" parent="CanvasLayer/LoadingScreen"]
 
 [node name="LoadingTimer" type="Timer" parent="CanvasLayer/LoadingScreen"]
 wait_time = 3.0
+
+[node name="PontikiTween" type="Tween" parent="CanvasLayer/LoadingScreen"]
 [connection signal="tween_completed" from="CanvasLayer/HUD/DialogueTween" to="." method="_on_DialogueTween_tween_completed"]
 [connection signal="tween_completed" from="CanvasLayer/HUD/DialogueAlphaTween" to="." method="_on_DialogueAlphaTween_tween_completed"]
 [connection signal="tween_completed" from="CanvasLayer/LoadingScreen/LoadingAlphaTween" to="." method="_on_LoadingAlphaTween_tween_completed"]

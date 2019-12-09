@@ -94,6 +94,8 @@ func die() -> void:
 			child.queue_free()
 	hope_level = MAX_HOPE
 	breath_level = MAX_BREATH
+	Globals.world().get_node("RestartLevelPlayer").play()
+	$DeathTimer.start()
 	emit_signal("breath_changed", hope_level)
 	emit_signal("hope_changed", breath_level)
 
@@ -122,6 +124,14 @@ func _unhandled_input(event: InputEvent) -> void:
 			emit_signal("singing_stopped")
 
 
+func add_spirit() -> void:
+	var spirit: PathFollow2D = load("res://Spirit.tscn").instance()
+	add_child(spirit)
+
+
+func start_spirits() -> void:
+	$SpiritTimer.start()
+
 func _on_SpiritTimer_timeout() -> void:
 	randomize()
 	for i in range(3):
@@ -136,6 +146,8 @@ func _on_body_entered(body: PhysicsBody2D) -> void:
 		hope_level -= 20
 		if hope_level < 0:
 			die()
+		if $SpiritTimer.is_stopped():
+			$SpiritTimer.start()
 		if $HopeTimer.is_stopped():
 			$HopeTimer.start()
 		emit_signal("hope_changed", hope_level)
@@ -175,3 +187,7 @@ func _on_speaker_changed(speaker: Node2D) -> void:
 func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 	if not in_dialogue:
 		lock_camera_to_player()
+
+
+func _on_DeathTimer_timeout() -> void:
+	Globals.world().get_node("RestartLevelPlayer").stop()

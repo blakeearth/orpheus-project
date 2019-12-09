@@ -11,6 +11,7 @@ onready var dialogue_alpha_tween := $CanvasLayer/HUD/DialogueAlphaTween
 onready var bars_alpha_tween := $CanvasLayer/HUD/BarsAlphaTween
 onready var loading_alpha_tween := $CanvasLayer/LoadingScreen/LoadingAlphaTween
 onready var loading_screen := $CanvasLayer/LoadingScreen
+onready var pontiki_tween := $CanvasLayer/LoadingScreen/PontikiTween
 
 var animated_hope: float = 0
 var animated_breath: float = 0
@@ -123,6 +124,7 @@ func set_npc_speaker(new_speaker: Speaker) -> void:
 func start_dialogue() -> void:
 	first_speaker = current_speaker
 	in_dialogue = true
+	Globals.world().get_node("TunnelPlayer").play(5)
 	fade_dialogue_box_to(1.0)
 	emit_signal("speaker_changed", current_speaker)
 	current_dialogue_node = current_speaker.get_next_dialogue_node()
@@ -156,9 +158,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				first_speaker = current_speaker
 				in_dialogue = true
 				fade_dialogue_box_to(1.0)
-				emit_signal("speaker_changed", current_speaker)
 				current_dialogue_node = current_speaker.get_next_dialogue_node()
 				execute_dialogue_node(current_dialogue_node)
+				emit_signal("speaker_changed", current_dialogue_node.get_speaker())
 			elif in_dialogue:
 				skipped_dialogue = false
 				print("continuing the dialogue")
@@ -179,14 +181,9 @@ func _unhandled_input(event: InputEvent) -> void:
 					skipped_dialogue = false
 					current_speaker = first_speaker
 					fade_dialogue_box_to(0.0)
+					Globals.world().get_node("TunnelPlayer").stop()
 					emit_signal("dialogue_stopped")
 		skipped_dialogue = false
-
-
-func _on_DialogueTween_tween_completed(object: Object, key: NodePath) -> void:
-	if not in_dialogue:
-		fade_dialogue_box_to(0.0)
-		emit_signal("dialogue_stopped")
 
 
 func _on_DialogueAlphaTween_tween_completed(object: Object, key: NodePath) -> void:
@@ -199,6 +196,7 @@ func _on_DialogueAlphaTween_tween_completed(object: Object, key: NodePath) -> vo
 
 func _on_hope_changed(hope: int) -> void:
 	update_hope(hope)
+	Globals.world().get_node("Player/SpiritTimer").start()
 
 
 func _on_breath_changed(breath: int) -> void:
@@ -214,11 +212,13 @@ func _on_loading_started() -> void:
 	if not loading_alpha_tween.is_active():
 		loading_alpha_tween.start()
 	print("timer started")
+	Globals.world().get_node("LoadingScreenPlayer").play()
 
 
 func _on_loading_stopped() -> void:
 	loading = false
 	print("loading stopped")
+
 
 func _on_LoadingTimer_timeout() -> void:
 	if not loading:
@@ -229,8 +229,17 @@ func _on_LoadingTimer_timeout() -> void:
 		$CanvasLayer/LoadingScreen/LoadingTimer.stop()
 		if not loading_alpha_tween.is_active():
 			loading_alpha_tween.start()
+	pontiki_tween.stop($CanvasLayer/LoadingScreen/Panel/AnimatedSprite)
+	pontiki_tween.set_active(false)
+	$CanvasLayer/LoadingScreen/Panel/AnimatedSprite.position = Vector2(-60, 565)
+	Globals.world().get_node("LoadingScreenPlayer").stop()
 
 
 func _on_LoadingAlphaTween_tween_completed(object: Object, key: NodePath) -> void:
 	if loading:
+		var start_position: Vector2 = $CanvasLayer/LoadingScreen/Panel/AnimatedSprite.position
+		var end_position: Vector2 = Vector2(1100, 565)
+		pontiki_tween.interpolate_property($CanvasLayer/LoadingScreen/Panel/AnimatedSprite, "position", start_position, end_position, 5, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		if not pontiki_tween.is_active():
+			pontiki_tween.start()
 		emit_signal("curtain_dropped")

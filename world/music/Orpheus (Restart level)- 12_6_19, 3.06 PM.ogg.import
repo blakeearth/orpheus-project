@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Orpheus (Restart level)- 12_6_19, 3.06 PM.ogg-80e20adf9a8f7b6c0fdf75fb0a12339e.oggstr"
+
+[deps]
+
+source_file="res://world/music/Orpheus (Restart level)- 12_6_19, 3.06 PM.ogg"
+dest_files=[ "res://.import/Orpheus (Restart level)- 12_6_19, 3.06 PM.ogg-80e20adf9a8f7b6c0fdf75fb0a12339e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
